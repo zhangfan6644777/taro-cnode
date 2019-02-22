@@ -5,7 +5,7 @@ import { connect } from '@tarojs/redux'
 import './index.less'
 
 import { AtTabBar, AtTabs, AtTabsPane, AtLoadMore, AtActivityIndicator} from 'taro-ui'
-import { getTopicList, initlist } from '../../actions/home'
+import { getTopicList, initlist, getMoreTopicList } from '../../actions/home'
 import Tabbar from '../../components/Tabbar/Tabbar'
 import TabItem from '../../components/TopicItem/TopicItem'
 
@@ -22,11 +22,14 @@ const tabList = [
   home
 }), (dispatch) => ({
   initlist() {
-    dispatch(initlist())
+    return dispatch(initlist())
   },
   getTopicList(params) {
-    dispatch(getTopicList(params))
-  }
+    return dispatch(getTopicList(params))
+  },
+  getMoreTopicList(params) {
+    return dispatch(getMoreTopicList(params))
+  },
 }))
 
 class Index extends Component {
@@ -52,8 +55,7 @@ class Index extends Component {
     this.state = { 
       current: 0,//current tab
       status: 'more',// loadmore status
-      loading: false,//loading status
-      initStatus: false,//init status
+      loading: true,//loading status
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -66,14 +68,24 @@ class Index extends Component {
     this.init()
   }
   async init() {
-    this.setState({
-      loading: true
-    });
     await this.props.getTopicList(this.params);
     this.setState({
-      loading: false,
-      initStatus: true
+      loading: false
     });
+  }
+  getTab(top,good,tab) {
+    if (top) {
+      return '置顶';
+    } else if (good) {
+      return '精华';
+    } else {
+      const tabArray = {
+        'ask': '问答',
+        'share': '分享',
+        'job': '招聘'
+      };
+      return tabArray[tab];
+    }
   }
   async handleClick(value) {
     this.props.initlist();
@@ -105,32 +117,21 @@ class Index extends Component {
       }
     }
   }
-  getTab(top,good,tab) {
-    if (top) {
-      return '置顶';
-    } else if (good) {
-      return '精华';
-    } else {
-      const tabArray = {
-        'ask': '问答',
-        'share': '分享',
-        'job': '招聘'
-      };
-      return tabArray[tab];
-    }
-  }
-  loadmore() {
-        // 开始加载
+  async loadmore() {
     this.setState({
       status: 'loading'
-    })
-    // 模拟异步请求数据
-    setTimeout(() => {
-      // 没有更多了
+    });
+    this.params.page++;
+    const data = await this.props.getMoreTopicList(this.params);
+    if(data.data.length === 0) {
+      this.setState({
+        status: 'noMore'
+      });
+    } else {
       this.setState({
         status: 'more'
-      })
-    }, 2000)
+      });
+    }
   }
   render () {
     const {topicList} = this.props.home;
@@ -141,7 +142,7 @@ class Index extends Component {
       getTab: this.getTab
     }
     return (
-      <View className={this.state.initStatus ? 'homepage' : ''}>
+      <View className="homepage">
         <AtTabs
           animated={false}
           swipeable={false}
@@ -160,10 +161,13 @@ class Index extends Component {
           })}
         </AtTabs>
         {this.state.loading && <AtActivityIndicator size="50" color="#FF544F" mode='center' content='loading'></AtActivityIndicator>}
-        {/* {this.state.loading && <AtLoadMore
+
+        <View className={this.state.status === 'more' ? "loadmore" : 'loadmore-loading'}>
+        {!this.state.loading && <AtLoadMore
           onClick={this.loadmore.bind(this)}
           status={this.state.status}
-        />} */}
+        />}
+        </View>
         <Tabbar/>
       </View>
     )

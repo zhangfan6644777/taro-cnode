@@ -10,10 +10,14 @@ export default function home (state = INITIAL_STATE, action) {
       topicList: []
     }
     case 'GETLIST':
-      state.topicList = [...action.data];
       return {
         ...state,
-        topicList: [...action.data]
+        topicList: [...action.data.data]
+      }
+    case 'LOADMORE':
+      return {
+        ...state,
+        topicList: [...state.topicList,...action.data.data]
       }
      default:
        return state

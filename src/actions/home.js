@@ -1,6 +1,6 @@
-import {GETLIST,INITLIST} from '../constants/home';
+import {GETLIST,INITLIST,LOADMORE} from '../constants/home';
 
-import Service from '../services/home'
+import Service from '../services/home';
 
 export const getlist = (data) => {
     return {
@@ -8,16 +8,29 @@ export const getlist = (data) => {
       data: data
     }
 }
+
 export const initlist = (data) => {
   return {
     type: INITLIST
   }
 }
+export const load = (data) => {
+  return {
+    type: LOADMORE,
+    data: data
+  }
+}
 export function getTopicList (params) {
-    return async dispatch => {
-      console.log('params',params)
-      const data = await Service.getTopicList(params);
-      console.log(data,'data');
-      dispatch(getlist(data))
-    }
+  return async dispatch => {
+    const data = await Service.getTopicList(params);
+    dispatch(getlist(data));
+    return data;
+  }
+}
+export function getMoreTopicList (params) {
+  return async dispatch => {
+    const data = await Service.getTopicList(params);
+    dispatch(load(data))
+    return data;
+  }
 }

@@ -18,7 +18,7 @@ class Fetchs {
     });
     let res = await resp.json();
     if (resp.status === 200) {
-      return res.data;
+      return res;
     }
   }
   async GET(url,params) {
@@ -37,8 +37,9 @@ class Fetchs {
       //headers: jsonHeaders()
     });
     let res = await resp.json();
+    console.log('rererere',res)
     if (resp.status === 200) {
-      return res.data;
+      return res;
     }
   }
 
