@@ -15,7 +15,6 @@ const tabList = [
   { title: '分享', type: 'ask'},
   { title: '问答', type: 'share'},
   { title: '招聘', type: 'job'},
-  { title: '测试', type: 'test'}
 ]
 
 @connect(({ home }) => ({
