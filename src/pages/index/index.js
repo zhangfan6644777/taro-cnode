@@ -5,21 +5,27 @@ import { connect } from '@tarojs/redux'
 import './index.less'
 
 import { AtTabBar, AtTabs, AtTabsPane} from 'taro-ui'
-import { getTopicList } from '../../actions/home'
+import { getTopicList, initlist } from '../../actions/home'
 import Tabbar from '../../components/Tabbar/Tabbar'
 import TabItem from '../../components/TopicItem/TopicItem'
 
 const tabList = [
-  { title: '标签页1' },
-  { title: '标签页2' },
-  { title: '标签页3' }
+  { title: '全部', type: 'all'},
+  { title: '精华', type: 'good'},
+  { title: '分享', type: 'ask'},
+  { title: '问答', type: 'share'},
+  { title: '招聘', type: 'job'},
+  { title: '测试', type: 'test'}
 ]
 
 @connect(({ home }) => ({
   home
 }), (dispatch) => ({
-  getTopicList() {
-    dispatch(getTopicList())
+  initlist() {
+    dispatch(initlist())
+  },
+  getTopicList(params) {
+    dispatch(getTopicList(params))
   }
 }))
 
@@ -40,9 +46,10 @@ class Index extends Component {
 
     this.params = {
       limit: 10,
-      page: 1
+      page: 1,
+      tab: tabList[0].type
     };
-    this.state = { current: 1 };
+    this.state = { current: 0 };
     console.log('props', props);
   }
   componentWillReceiveProps(nextProps) {
@@ -54,10 +61,17 @@ class Index extends Component {
   componentDidMount() {
     this.props.getTopicList(this.params);
   }
-  handleClick(value) {
+  async handleClick(value) {
+    this.props.initlist();
     this.setState({
       current: value
     });
+    this.params = {
+      tab: tabList[value].type,
+      limit:10,
+      page:1
+    }
+    await this.props.getTopicList(this.params);
   }
   enterTopicDetails() {
     return {
@@ -99,6 +113,7 @@ class Index extends Component {
       <View className='index'>
         <AtTabs
           animated={false}
+          swipeable={false}
           current={this.state.current}
           tabList={tabList}
           onClick={this.handleClick.bind(this)}>

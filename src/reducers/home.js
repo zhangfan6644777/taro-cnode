@@ -1,12 +1,15 @@
-import { GETLIST } from '../constants/home'
-
 const INITIAL_STATE = {
   topicList: []
 }
 
-export default function counter (state = INITIAL_STATE, action) {
+export default function home (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case GETLIST:
+    case 'INITLIST':
+    return {
+      ...state,
+      topicList: []
+    }
+    case 'GETLIST':
       state.topicList = [...action.data];
       return {
         ...state,

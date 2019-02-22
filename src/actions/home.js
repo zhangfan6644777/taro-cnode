@@ -1,4 +1,4 @@
-import {GETLIST} from '../constants/home';
+import {GETLIST,INITLIST} from '../constants/home';
 
 import Service from '../services/home'
 
@@ -8,9 +8,15 @@ export const getlist = (data) => {
       data: data
     }
 }
-export function getTopicList (data) {
+export const initlist = (data) => {
+  return {
+    type: INITLIST
+  }
+}
+export function getTopicList (params) {
     return async dispatch => {
-      const data = await Service.getTopicList(data);
+      console.log('params',params)
+      const data = await Service.getTopicList(params);
       console.log(data,'data');
       dispatch(getlist(data))
     }
