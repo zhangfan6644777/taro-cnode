@@ -7,7 +7,13 @@ import './index.less'
 import { AtTabBar, AtTabs, AtTabsPane} from 'taro-ui'
 import { getTopicList } from '../../actions/home'
 import Tabbar from '../../components/Tabbar/Tabbar'
+import TabItem from '../../components/TopicItem/TopicItem'
 
+const tabList = [
+  { title: '标签页1' },
+  { title: '标签页2' },
+  { title: '标签页3' }
+]
 
 @connect(({ home }) => ({
   home
@@ -16,6 +22,7 @@ import Tabbar from '../../components/Tabbar/Tabbar'
     dispatch(getTopicList())
   }
 }))
+
 class Index extends Component {
 
     config = {
@@ -52,33 +59,59 @@ class Index extends Component {
       current: value
     });
   }
+  enterTopicDetails() {
+    return {
+      onClick: () => {
+        alert(1)
+      }
+    }
+  }
+  enterUserInfo() {
+    return {
+      onClick: () => {
+        alert(2)
+      }
+    }
+  }
+  getTab(top,good,tab) {
+    if (top) {
+      return '置顶';
+    } else if (good) {
+      return '精华';
+    } else {
+      const tabArray = {
+        'ask': '问答',
+        'share': '分享',
+        'job': '招聘'
+      };
+      return tabArray[tab];
+    }
+  }
   render () {
     const {topicList} = this.props.home;
-    console.log(topicList)
+    const props = {
+      ...this.props,
+      enterTopicDetails: this.enterTopicDetails,
+      enterUserInfo: this.enterUserInfo,
+      getTab: this.getTab
+    }
     return (
       <View className='index'>
         <AtTabs
           animated={false}
           current={this.state.current}
-          tabList={[
-            { title: '标签页1' },
-            { title: '标签页2' },
-            { title: '标签页3' }
-          ]}
+          tabList={tabList}
           onClick={this.handleClick.bind(this)}>
-          <AtTabsPane current={this.state.current} index={0} >
-            <View style='background-color: #FFF;text-align: center;'>
-              {topicList.map((item, index) => {
-                return <View>{index}</View>
-              })}
-            </View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={1}>
-            <View style='padding: 100px 50px;background-color: #FFF;text-align: center;'>标签页二的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={2}>
-            <View style='padding: 100px 50px;background-color: #FFF;text-align: center;'>标签页三的内容</View>
-          </AtTabsPane>
+          {tabList.map((item, index) => {
+            return <
+              AtTabsPane current={this.state.current} index={index}>
+                <View style='background-color: #FFF;text-align: center;'>
+                  {topicList.map((item, index) => {
+                    return <TabItem data={item} {...props}/>
+                  })}
+                </View>
+              </AtTabsPane>
+          })}
         </AtTabs>
         <Tabbar/>
       </View>
