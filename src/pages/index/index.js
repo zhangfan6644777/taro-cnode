@@ -4,7 +4,7 @@ import { connect } from '@tarojs/redux'
 
 import './index.less'
 
-import { AtTabBar, AtTabs, AtTabsPane} from 'taro-ui'
+import { AtTabBar, AtTabs, AtTabsPane, AtLoadMore, AtActivityIndicator} from 'taro-ui'
 import { getTopicList, initlist } from '../../actions/home'
 import Tabbar from '../../components/Tabbar/Tabbar'
 import TabItem from '../../components/TopicItem/TopicItem'
@@ -49,8 +49,12 @@ class Index extends Component {
       page: 1,
       tab: tabList[0].type
     };
-    this.state = { current: 0 };
-    console.log('props', props);
+    this.state = { 
+      current: 0,//current tab
+      status: 'more',// loadmore status
+      loading: false,//loading status
+      initStatus: false,//init status
+    };
   }
   componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps);
@@ -59,11 +63,22 @@ class Index extends Component {
   componentDidShow() {}
   componentDidHide() {}
   componentDidMount() {
-    this.props.getTopicList(this.params);
+    this.init()
+  }
+  async init() {
+    this.setState({
+      loading: true
+    });
+    await this.props.getTopicList(this.params);
+    this.setState({
+      loading: false,
+      initStatus: true
+    });
   }
   async handleClick(value) {
     this.props.initlist();
     this.setState({
+      loading: true,
       current: value
     });
     this.params = {
@@ -72,6 +87,9 @@ class Index extends Component {
       page:1
     }
     await this.props.getTopicList(this.params);
+    this.setState({
+      loading: false
+    });
   }
   enterTopicDetails() {
     return {
@@ -101,6 +119,19 @@ class Index extends Component {
       return tabArray[tab];
     }
   }
+  loadmore() {
+        // 开始加载
+    this.setState({
+      status: 'loading'
+    })
+    // 模拟异步请求数据
+    setTimeout(() => {
+      // 没有更多了
+      this.setState({
+        status: 'more'
+      })
+    }, 2000)
+  }
   render () {
     const {topicList} = this.props.home;
     const props = {
@@ -110,7 +141,7 @@ class Index extends Component {
       getTab: this.getTab
     }
     return (
-      <View className='index'>
+      <View className={this.state.initStatus ? 'homepage' : ''}>
         <AtTabs
           animated={false}
           swipeable={false}
@@ -120,7 +151,7 @@ class Index extends Component {
           {tabList.map((item, index) => {
             return <
               AtTabsPane current={this.state.current} index={index}>
-                <View style='background-color: #FFF;text-align: center;'>
+                <View className="topicListBox">
                   {topicList.map((item, index) => {
                     return <TabItem data={item} {...props}/>
                   })}
@@ -128,6 +159,11 @@ class Index extends Component {
               </AtTabsPane>
           })}
         </AtTabs>
+        {this.state.loading && <AtActivityIndicator size="50" color="#FF544F" mode='center' content='loading'></AtActivityIndicator>}
+        {/* {this.state.loading && <AtLoadMore
+          onClick={this.loadmore.bind(this)}
+          status={this.state.status}
+        />} */}
         <Tabbar/>
       </View>
     )

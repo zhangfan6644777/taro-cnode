@@ -3,7 +3,7 @@ import 'taro-ui/dist/style/index.scss'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 import Index from './pages/index'
-
+import { View, Button, Text } from '@tarojs/components'
 import configStore from './store'
 
 import './app.less'
@@ -46,6 +46,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Index />
+        <View>111</View>
       </Provider>
     )
   }
