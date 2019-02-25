@@ -20,7 +20,8 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/articleDetails/articleDetails'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -46,7 +47,6 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Index />
-        <View>111</View>
       </Provider>
     )
   }

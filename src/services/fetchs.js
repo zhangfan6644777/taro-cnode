@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro'
 const jsonHeaders = function () {
   return {
     // 'Duliday-Agent': '4',
@@ -7,18 +8,18 @@ const jsonHeaders = function () {
     // 'Duliday-Token': localStorage.getItem('Duliday-Token-manage')
   };
 };
+
 class Fetchs {
 
   async POST(url, params) {
-    const resp = await fetch(url, {
+    const resp = await Taro.request(url, {
       method: 'POST',
       credentials: 'include',
       //headers: jsonHeaders(),
       body: JSON.stringify(params)
     });
-    let res = await resp.json();
-    if (resp.status === 200) {
-      return res;
+    if (resp.statusCode === 200) {
+      return resp.data;
     }
   }
   async GET(url,params) {
@@ -32,14 +33,13 @@ class Fetchs {
           url += '&' + paramsArray.join('&')
       }
     }
-    let resp = await fetch(url, {
+    let resp = await Taro.request(url, {
       method: 'GET',
       //headers: jsonHeaders()
     });
-    let res = await resp.json();
-    console.log('rererere',res)
-    if (resp.status === 200) {
-      return res;
+    console.log(resp);
+    if (resp.statusCode === 200) {
+      return resp.data;
     }
   }
 

@@ -64,7 +64,12 @@ class Index extends Component {
   componentDidShow() {}
   componentDidHide() {}
   componentDidMount() {
-    this.init()
+    this.init();
+    if(process.env.TARO_ENV === 'weapp') {
+      // Taro.navigateTo({
+      //   url: `/pages/articleDetails/articleDetails`
+      // });
+    }
   }
   async init() {
     await this.props.getTopicList(this.params);
@@ -102,10 +107,14 @@ class Index extends Component {
       loading: false
     });
   }
-  enterTopicDetails() {
+  enterTopicDetails(data) {
+    // const id = data.id;
     return {
       onClick: () => {
-        alert(1)
+        console.log(data)
+        Taro.navigateTo({
+          url: `/pages/articleDetails/articleDetails?id=${data.id}`
+        })
       }
     }
   }
@@ -134,6 +143,7 @@ class Index extends Component {
   }
   render () {
     const {topicList} = this.props.home;
+    console.log('topicList',topicList)
     const props = {
       ...this.props,
       enterTopicDetails: this.enterTopicDetails,

@@ -1,0 +1,104 @@
+.topicDetailContainer{
+    margin: 30px;
+    .title{
+      padding: 16px;
+      border-radius: 10px;
+      background-color: #f0f0f0;
+      font-size: 36px;
+    }
+    .authorInfo{
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      .authorInfo-text-box{
+        flex: 1;
+        margin-left: 15px;
+      }
+      .authorInfo-text{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+      }
+      .authorInfo-text-first{
+        .authorInfo-text-second{
+          background: linear-gradient(60deg, #FFB199 0%, #FF544F 100%);
+          font-size: 12px;
+          padding: 0px 12px;
+          color: #fff;
+          border-radius: 6px;
+        }
+      }
+      .avatur{
+        width: 80px;
+        height: 80px;
+      }
+    }
+    .markdown-text{
+      margin-top: 5px;
+      font-size: 30px;
+      img{
+        margin: auto;
+        max-width: 100% !important;
+      }
+      a{
+        display: inline-block;
+        word-wrap:break-word;
+        max-width: 100%;
+        color:#4078c0;
+        &:hover{
+          color:#4078c0;
+        }
+      }
+      p{
+        max-width: 100% !important;
+        white-space: normal;
+        word-break: break-all;
+      }
+      li{
+        list-style:none;
+      }
+      code{
+      white-space: normal;
+      word-break: break-all;
+      }
+    }
+    .commentTitle{
+      padding: calc(160vw/75);
+    }
+    .commentList{
+      border-top: 1px solid #e5e5e5;
+      margin-top: 5px;
+      .commentItem{
+        border-bottom: 1px solid #e5e5e5;
+        margin-top: 10px;
+        .commentInfo{
+          display: flex;
+          align-items: center;
+          img{
+            width: calc(800vw/75);
+            height: calc(800vw/75);
+          }
+          p{
+            margin-left: calc(200vw/75);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+        }
+        .commentBottom{
+          margin-top: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          >p{
+            width: calc(400vw/75);
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+  
