@@ -65,7 +65,7 @@
       }
     }
     .commentTitle{
-      padding: calc(160vw/75);
+      padding: 16px;
     }
     .commentList{
       border-top: 1px solid #e5e5e5;
@@ -76,12 +76,13 @@
         .commentInfo{
           display: flex;
           align-items: center;
-          img{
-            width: calc(800vw/75);
-            height: calc(800vw/75);
+          .replyerAvatur{
+            width: 80px;
+            height: 80px;
           }
-          p{
-            margin-left: calc(200vw/75);
+          .replyer-text-box{
+            margin-left: 20px;
+            font-size: 30px;
             flex: 1;
             display: flex;
             align-items: center;
@@ -93,9 +94,15 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          >p{
-            width: calc(400vw/75);
+          .replyer-text-time{
+            font-size: 32px;
+          }
+          .good-box{
+            width: 400px;
             text-align: right;
+            .good-text{
+              font-size: 24px;
+            }
           }
         }
       }

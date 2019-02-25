@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
-import { AtTabBar, AtTabs, AtTabTexte, AtLoadMore, AtActivityIndicator} from 'taro-ui'
+import { AtTabBar, AtTabs, AtTabTexte, AtLoadMore, AtActivityIndicator,AtIcon} from 'taro-ui'
 import { getDetail, getComments } from '../../actions/articleDetails'
 import Tabbar from '../../components/Tabbar/Tabbar'
 import TabItem from '../../components/TopicItem/TopicItem'
@@ -120,17 +120,32 @@ class Index extends Component {
             <h3>{detail.reply_count}回复</h3>
           </section>
           <View className="commentList">
-            {/* <View className="commentItem" v-for="(item, key) in detail.replies">
+          {detail.replies.map((item,key) => {
+            return(<View className="commentItem">
               <View className="commentInfo">
-                <Image src={item.author.avatar_url}/>
-                <p><Text>{item.author.loginname}</Text><Text>{key+1}楼</Text></p>
+                <Image className="replyerAvatur" src={item.author.avatar_url}/>
+                <View className="replyer-text-box"><Text className="replyer-text">{item.author.loginname}</Text><Text>{key+1}楼</Text></View>
               </View>
               <View className="markdown-body topic-content" dangerouslySetInnerHTML={{ __html: item.content }} />
               <View className="commentBottom">
-                <Text>{moment(item.create_at).format('YYYY-MM-DD')}</Text>
-                <p><Text><i></i>{item.ups.length}</Text><Text><i></i></Text></p>
+                <Text className="replyer-text-time">{moment(item.create_at).format('YYYY-MM-DD')}</Text>
+                <View className="good-box">
+                {this.state.login ?
+                <Text className="good-text">
+                <AtIcon value='heart' size='20' color='#707070'></AtIcon>
+                {item.ups.length}
+                <AtIcon value='message' size='20' color='#707070'></AtIcon>
+                </Text>
+                :
+                  <Text className="good-text">
+                  <AtIcon value='message' size='20' color='#707070'></AtIcon>
+                  </Text>
+                }
+
+                </View>
               </View>
-            </View> */}
+            </View>)
+          })}
           </View>
         </View>
         : null}
