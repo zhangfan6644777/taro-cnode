@@ -3,7 +3,7 @@ import { View, Button, Text, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import { AtTabBar, AtTabs, AtInput ,AtIcon, AtButton, AtMessage} from 'taro-ui'
-import { goLogin, outLogin } from '../../actions/center'
+import { goLogin, getUserInfo, outLogin } from '../../actions/center'
 import Tabbar from '../../components/Tabbar/Tabbar'
 import moment from 'moment'
 import './center.less'
@@ -20,6 +20,9 @@ const tabList = [
 }), (dispatch) => ({
   goLogin(params) {
     return dispatch(goLogin(params))
+  },
+  getUserInfo(params) {
+    return dispatch(getUserInfo(params))
   },
   outLogin(params) {
     return dispatch(outLogin(params))
@@ -55,7 +58,11 @@ class Index extends Component {
     this.init()
   }
   async init() {
-
+    const {loginInfo} = this.props.center;
+    if(loginInfo) {
+        const data = await this.props.getUserInfo(loginInfo.loginname);
+        console.log(data);
+    }
   }
   handleChange(value) {
     this.setState({
@@ -72,7 +79,6 @@ class Index extends Component {
             accesstoken
         };
         const data = await this.props.goLogin(params);
-        console.log(data,'aaaaaa');
         if(data.success){
             Taro.atMessage({
                 'message': '登录成功',
@@ -96,13 +102,23 @@ class Index extends Component {
   }
 
   render () {
-    const {userInfo} = this.props.center;
+    const {loginInfo,userInfo} = this.props.center;
     console.log(this.props);
     return (
       <View className="centerContainer">
         <AtMessage />
-        {userInfo ?
-        <View>11</View>
+        {loginInfo ?
+        <View>
+            {userInfo && 
+                <View className="mineUserInfo">
+                    <Image className="avatar" src={userInfo.avatar_url}/>
+                    <View>
+                        <Text>Sign In: {moment(userInfo.create_at).format('YYYY-MM-DD')}</Text>
+                        <Text>Score: {userInfo.score}</Text>
+                    </View>
+                </View>
+            }
+        </View>
         :
         <View className="loginBox">
             <AtInput

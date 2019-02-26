@@ -1,11 +1,18 @@
 import {
     LOGIN,
-    OUTLOGIN
+    OUTLOGIN,
+    GETMYINFO
   } from '../constants/center'
   import Service from '../services/center';
   export const login = (data) => {
     return {
       type: LOGIN,
+      data: data
+    }
+  }
+  export const getuserinfo = (data) => {
+    return {
+      type: GETMYINFO,
       data: data
     }
   }
@@ -23,6 +30,16 @@ import {
         console.log(data,'asdasdasd')
         if(data.success) {
             dispatch(login(data));
+        }
+        return data;
+    }
+  }
+  export function getUserInfo (params) {
+    return async dispatch => {
+        const data = await Service.getUserInfo(params);
+        console.log(data,'asdasdasd')
+        if(data.success) {
+            dispatch(getuserinfo(data));
         }
         return data;
     }
