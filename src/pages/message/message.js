@@ -59,6 +59,7 @@ class Index extends Component {
     return (
       <View className="messageContainer">
         message
+        <Tabbar current={2}/>
       </View>
     )
   }
