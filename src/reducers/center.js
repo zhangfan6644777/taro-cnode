@@ -20,6 +20,7 @@ const INITIAL_STATE = {
           loginInfo: null
         }
         case 'GETMYINFO':
+        Taro.setStorage({ key: 'userInfo', data: Object.assign({}, action.data.data) })
         return {
           ...state,
           userInfo: Object.assign({}, action.data.data)
