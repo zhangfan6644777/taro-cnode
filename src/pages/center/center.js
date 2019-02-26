@@ -82,6 +82,7 @@ class Index extends Component {
                 'message': '登录成功',
                 'type': 'success',
             })
+            await this.props.getUserInfo(data.loginname);
         } else {
             Taro.atMessage({
                 'message': data.error_msg,
