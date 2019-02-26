@@ -9,7 +9,7 @@ export const http_post_deCollectTopic = () => `${HOST}/api/v1/topic_collect/de_c
 export const http_post_addReply = (topicId) => `${HOST}/api/v1/topic/${topicId}/replies`;
 export const http_post_upsReply = (replyId) => `${HOST}/api/v1/reply/${replyId}/ups`;
 //publish
-//export const http_get_topicDetails = HOST + '/api/v1/topic';
+export const http_post_creatTopic = () => HOST + '/api/v1/topics';
 //mine
 export const http_get_userinfo = (loginname) => `${HOST}/api/v1/user/${loginname}`;
 export const http_get_userCollectTopic = (loginname) => `${HOST}/api/v1/topic_collect/${loginname}`;

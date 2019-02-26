@@ -23,7 +23,8 @@ class App extends Component {
       'pages/index/index',
       'pages/articleDetails/articleDetails',
       'pages/center/center',
-      'pages/message/message'
+      'pages/message/message',
+      'pages/publish/publish'
     ],
     window: {
       backgroundTextStyle: 'light',

@@ -3,7 +3,7 @@ import { AtTabBar} from 'taro-ui'
 const tabList = [
   { title: '主页', iconType: 'home', router: 'index'},
   { title: '发布', iconType: 'add', router: 'publish'},
-  { title: '消息', iconType: 'message', router: 'message' },
+  { title: '消息', iconType: 'message', router: 'message'},
   { title: '我的', iconType: 'user', router: 'center'}
 ]
 export default class Tabbar extends Component {
