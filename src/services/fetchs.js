@@ -3,8 +3,8 @@ const jsonHeaders = function () {
   return {
     // 'Duliday-Agent': '4',
     // 'Duliday-Agent-Version': 0x020000.toString(),
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
+    'accept': 'application/json, text/plain, */*',
+    'content-type': 'application/json;charset=UTF-8',
     // 'Duliday-Token': localStorage.getItem('Duliday-Token-manage')
   };
 };
@@ -12,15 +12,17 @@ const jsonHeaders = function () {
 class Fetchs {
 
   async POST(url, params) {
-    const resp = await Taro.request(url, {
+    const resp = await Taro.request({
+      url,
       method: 'POST',
-      credentials: 'include',
-      //headers: jsonHeaders(),
-      body: JSON.stringify(params)
+      //credentials: 'include',
+      header: jsonHeaders(),
+      data: JSON.stringify(params)
     });
-    if (resp.statusCode === 200) {
-      return resp.data;
-    }
+    return resp.data;
+    // if (resp.statusCode === 200) {
+    //   return resp.data;
+    // } 
   }
   async GET(url,params) {
     if (params) {
@@ -33,14 +35,16 @@ class Fetchs {
           url += '&' + paramsArray.join('&')
       }
     }
-    let resp = await Taro.request(url, {
+    let resp = await Taro.request({
+      url,
       method: 'GET',
-      //headers: jsonHeaders()
+      //header: jsonHeaders()
     });
     console.log(resp);
-    if (resp.statusCode === 200) {
-      return resp.data;
-    }
+    return resp.data;
+    // if (resp.statusCode === 200) {
+    //   return resp.data;
+    // }
   }
 
 }

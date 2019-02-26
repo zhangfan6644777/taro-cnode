@@ -177,7 +177,7 @@ class Index extends Component {
           status={this.state.status}
         />}
         </View>
-        <Tabbar/>
+        <Tabbar current={0}/>
       </View>
     )
   }
