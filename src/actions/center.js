@@ -29,6 +29,7 @@ import {
         const data = await Service.goLogin(params);
         console.log(data,'asdasdasd')
         if(data.success) {
+            data.accesstoken = params.accesstoken;
             dispatch(login(data));
         }
         return data;

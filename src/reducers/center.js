@@ -7,11 +7,7 @@ const INITIAL_STATE = {
   export default function home (state = INITIAL_STATE, action) {
     switch (action.type) {
       case 'LOGIN':
-      const loginInfo = {
-        avatar_url: action.data.avatar_url,
-        id: action.data.id,
-        loginname: action.data.loginname
-      }
+      const loginInfo = Object.assign({}, action.data)
       Taro.setStorage({ key: 'loginInfo', data: loginInfo })
       return {
         ...state,
