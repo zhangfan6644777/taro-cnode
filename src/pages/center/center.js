@@ -109,8 +109,9 @@ class Index extends Component {
     });
   }
   render () {
-    const {loginInfo,userInfo} = this.props.center;
     console.log(this.props);
+    const {loginInfo,userInfo} = this.props.center;
+    
     return (
       <View className="centerContainer">
         <AtMessage />
