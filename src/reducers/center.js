@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 const INITIAL_STATE = {
     loginInfo: Taro.getStorageSync('loginInfo') || null,
-    userInfo: null
+    userInfo: Taro.getStorageSync('userInfo') || null,
   }
   
   export default function home (state = INITIAL_STATE, action) {

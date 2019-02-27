@@ -106,7 +106,7 @@ class Index extends Component {
   }
   jump(value) {
     Taro.navigateTo({
-        url: `/pages/${value}/${value}`
+        url: `/pages/myTopic/myTopic?from=${value}`
     });
   }
   render () {
@@ -132,21 +132,21 @@ class Index extends Component {
                     <AtListItem
                         title={decodeURI('我发布的话题')}
                         arrow='right'
-                        onClick={() => this.jump('topic')}
+                        onClick={() => this.jump('creat')}
                         thumb='https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png'
                     />
                     <AtListItem
                         title={decodeURI('我回复的话题')}
                         arrow='right'
-                        onClick={() => this.jump('topic')}
+                        onClick={() => this.jump('reply')}
                         thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
                     />
-                    <AtListItem
+                    {/* <AtListItem
                         title={decodeURI('我收藏的话题')}
                         arrow='right'
-                        onClick={() => this.jump('topic')}
+                        onClick={() => this.jump('collect')}
                         thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
-                    />
+                    /> */}
                 </AtList>
             </View>
             }
