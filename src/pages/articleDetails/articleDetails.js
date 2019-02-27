@@ -8,8 +8,8 @@ import Tabbar from '../../components/Tabbar/Tabbar'
 import TabItem from '../../components/TopicItem/TopicItem'
 import moment from 'moment'
 import Service from '../../services/articleDetails'
-import wemark from '../../components/taro-wemark/taro-wemark'
 import './articleDetails.less'
+import wemark from '../../components/taro-wemark/taro-wemark'
 const tabList = [
   { title: '全部', type: 'all'},
   { title: '精华', type: 'good'},
@@ -168,7 +168,8 @@ class Index extends Component {
                 <Image className="replyerAvatur" src={item.author.avatar_url}/>
                 <View className="replyer-text-box"><Text className="replyer-text">{item.author.loginname}</Text><Text>{key+1}楼</Text></View>
               </View>
-              <View className="markdown-body topic-content" dangerouslySetInnerHTML={{ __html: item.content }} />
+              {process.env.TARO_ENV === 'weapp' ? <wemark desc={item.content}/> : ''}
+              {process.env.TARO_ENV === 'h5' ? <View className="markdown-body topic-content" dangerouslySetInnerHTML={{ __html: item.content }} /> : ''}
               <View className="commentBottom">
                 <Text className="replyer-text-time">{moment(item.create_at).format('YYYY-MM-DD')}</Text>
                 <View className="good-box">

@@ -4,7 +4,10 @@ import {
 }
   from '@tarojs/components'
 
-var WxParse = require('./wxParse/wxParse');
+if (process.env.TARO_ENV === 'weapp') {
+  var WxParse = require('./wxParse/wxParse');
+}
+
 
 export default class DescRichText extends Component {
   static defaultProps = {
@@ -16,7 +19,6 @@ export default class DescRichText extends Component {
 
   constructor(props) {
     super(props)
-    console.log(props,'propspropspropspropsprops')
     this.state = {
       desc: props.desc
     }
