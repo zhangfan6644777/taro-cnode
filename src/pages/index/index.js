@@ -178,7 +178,7 @@ class Index extends Component {
           status={this.state.status}
         />}
         </View>
-        <Tabbar current={0}/>
+        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={0}/>}
       </View>
     )
   }

@@ -32,7 +32,38 @@ class App extends Component {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
-    }
+    },
+    tabBar: {
+      backgroundColor: '#fff',
+      selectedColor: '#6190E8',
+      list: [
+        {
+          "pagePath": "pages/index/index",
+          "text": "首页",
+          "iconPath": "./assert/home.png",
+          "selectedIconPath": "./assert/home_select.png",
+        },
+        {
+          "pagePath": 'pages/publish/publish',
+          "text": "发布",
+          "iconPath": "./assert/icon_add.png",
+          "selectedIconPath": "./assert/icon_add_select.png",  
+        },
+        {
+          "pagePath": 'pages/message/message',
+          "text": "消息",
+          "iconPath": "./assert/icon_community_line.png",
+          "selectedIconPath": "./assert/icon_community_line_select.png", 
+        },
+        {
+          "pagePath": 'pages/center/center',
+          "text": "我的",
+          "iconPath": "./assert/icon_signal.png",
+          "selectedIconPath": "./assert/icon_signal_select.png",
+        }
+      ]
+    },
+
   }
 
   componentDidMount () {}

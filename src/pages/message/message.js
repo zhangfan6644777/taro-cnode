@@ -153,7 +153,7 @@ class Index extends Component {
         :
         <View className="loginTip">请先<Text onClick={this.goLogin.bind(this)} className="login-text">登录</Text>在操作</View>
         }
-        <Tabbar current={2}/>
+        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={2}/>}
       </View>
     )
   }
