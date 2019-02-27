@@ -169,7 +169,7 @@ class Index extends Component {
               <View className="commentBottom">
                 <Text className="replyer-text-time">{moment(item.create_at).format('YYYY-MM-DD')}</Text>
                 <View className="good-box">
-                {this.state.login ?
+                {/* {this.state.login ?
                 <Text className="good-text">
                 <AtIcon value='heart' size='20' color='#707070'></AtIcon>
                 {item.ups.length}
@@ -179,7 +179,7 @@ class Index extends Component {
                   <Text className="good-text">
                   <AtIcon value='message' size='20' color='#707070'></AtIcon>
                   </Text>
-                }
+                } */}
 
                 </View>
               </View>
