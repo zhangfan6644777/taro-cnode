@@ -24,6 +24,13 @@ export function getDetail (params) {
         return data;
     }
 }
+export function refreshDetail (params) {
+    return async dispatch => {
+        const data = await Service.getArticleDetail(params);
+        dispatch(getdetail(data));
+        return data;
+    }
+}
 export function getComments (params) {
     return async dispatch => {
         dispatch(initDetail());

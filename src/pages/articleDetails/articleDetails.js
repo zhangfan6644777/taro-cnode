@@ -2,11 +2,12 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
-import { AtTabBar, AtTabs, AtTabTexte, AtLoadMore, AtActivityIndicator,AtIcon} from 'taro-ui'
-import { getDetail, getComments } from '../../actions/articleDetails'
+import { AtTabTexte, AtActivityIndicator,AtIcon,AtForm,AtTextarea,AtButton,AtMessage} from 'taro-ui'
+import { getDetail, refreshDetail } from '../../actions/articleDetails'
 import Tabbar from '../../components/Tabbar/Tabbar'
 import TabItem from '../../components/TopicItem/TopicItem'
 import moment from 'moment'
+import Service from '../../services/articleDetails'
 import './articleDetails.less'
 const tabList = [
   { title: '全部', type: 'all'},
@@ -16,14 +17,14 @@ const tabList = [
   { title: '招聘', type: 'job'},
 ]
 
-@connect(({ articleDetails }) => ({
-    articleDetails
+@connect(({ articleDetails,center }) => ({
+    articleDetails,center
 }), (dispatch) => ({
   getDetail(params) {
     return dispatch(getDetail(params))
   },
-  getComments(params) {
-    return dispatch(getComments(params))
+  refreshDetail(params) {
+    return dispatch(refreshDetail(params))
   },
 }))
 
@@ -51,6 +52,7 @@ class Index extends Component {
       current: 0,//current tab
       status: 'more',// loadmore status
       loading: true,//loading status
+      contentValue: ''
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -98,11 +100,48 @@ class Index extends Component {
       });
     }
   }
+  changeContent(event) {
+    this.setState({
+      'contentValue': event.target.value
+    })
+  }
+  async onSubmit() {
+    const params = {
+      accesstoken: this.props.center.loginInfo.accesstoken,
+      content: this.state.contentValue,
+      id: this.$router.params.id
+    }
+    const data = await Service.addReply(params);
+    if(data.success){
+        Taro.atMessage({
+            'message': '评论成功',
+            'type': 'success',
+        });
+        this.setState({
+          contentValue: ''
+        });
+        const {id} = this.$router.params;
+        this.props.refreshDetail(id);
+        //await this.props.getUserInfo(data.loginname);
+    } else {
+        Taro.atMessage({
+            'message': data.error_msg,
+            'type': 'error',
+        })
+    }
+    
+  }
+  goLogin() {
+    Taro.navigateTo({
+      url: `/pages/center/center`
+    });
+  }
   render () {
-    console.log(this.props.articleDetails);
-    const {detail} = this.props.articleDetails
+    const {detail} = this.props.articleDetails;
+    const {loginInfo} = this.props.center
     return (
       <View className="topicDetailContainer">
+        <AtMessage />
         {detail ?
         <View>
           <section className="title">
@@ -146,6 +185,22 @@ class Index extends Component {
               </View>
             </View>)
           })}
+          {loginInfo ?
+            <AtForm
+              className="form"
+            >
+              <AtTextarea
+                className="contentInput"
+                value={this.state.contentValue}
+                onChange={this.changeContent.bind(this)}
+                maxLength={200}
+                placeholder={decodeURI('请输入回复内容')}
+              />
+              <AtButton type='primary' className="submitBtn" onClick={() => this.onSubmit()}>评论</AtButton>
+            </AtForm>
+            :
+            <View className="loginTip">请先<Text onClick={this.goLogin.bind(this)} className="login-text">登录</Text>在操作</View>
+            }
           </View>
         </View>
         : null}
