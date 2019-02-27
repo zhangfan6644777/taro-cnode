@@ -17,6 +17,7 @@ export const http_get_userCollectTopic = (loginname) => `${HOST}/api/v1/topic_co
 export const http_get_message = () => `${HOST}/api/v1/messages`;
 export const http_get_messageCount = () => `${HOST}/api/v1/user/alsotang`;
 export const http_post_markOne = (msgId) => `${HOST}/api/v1/message/mark_one/${msgId}`;
+export const http_post_markAll = () => `${HOST}/api/v1/message/mark_all`;
 //myTopic
 
 //accesstoken

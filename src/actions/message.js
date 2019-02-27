@@ -19,3 +19,11 @@ export function getMessage (params) {
     }
 }
 
+export function markAll (params) {
+    return async dispatch => {
+        await Service.markAll(params);
+        const data = await Service.getMessage(params);
+        dispatch(getmessage(data));
+        return data;
+    }
+}
