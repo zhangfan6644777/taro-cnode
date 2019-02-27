@@ -78,20 +78,6 @@ class Index extends Component {
       loading: false
     });
   }
-  getTab(top,good,tab) {
-    if (top) {
-      return '置顶';
-    } else if (good) {
-      return '精华';
-    } else {
-      const tabArray = {
-        'ask': '问答',
-        'share': '分享',
-        'job': '招聘'
-      };
-      return tabArray[tab];
-    }
-  }
   async handleClick(value) {
     this.props.initlist();
     this.setState({
@@ -107,24 +93,6 @@ class Index extends Component {
     this.setState({
       loading: false
     });
-  }
-  enterTopicDetails(data) {
-    // const id = data.id;
-    return {
-      onClick: () => {
-        console.log(data)
-        Taro.navigateTo({
-          url: `/pages/articleDetails/articleDetails?id=${data.id}`
-        })
-      }
-    }
-  }
-  enterUserInfo() {
-    return {
-      onClick: () => {
-        alert(2)
-      }
-    }
   }
   async loadmore() {
     this.setState({
@@ -144,13 +112,6 @@ class Index extends Component {
   }
   render () {
     const {topicList} = this.props.home;
-    console.log('topicList',topicList)
-    const props = {
-      ...this.props,
-      enterTopicDetails: this.enterTopicDetails,
-      enterUserInfo: this.enterUserInfo,
-      getTab: this.getTab
-    }
     return (
       <View className="homepage">
         <AtTabs
@@ -159,12 +120,12 @@ class Index extends Component {
           current={this.state.current}
           tabList={tabList}
           onClick={this.handleClick.bind(this)}>
-          {tabList.map((item, index) => {
+          {tabList.map((item, key) => {
             return <
-              AtTabsPane current={this.state.current} index={index}>
+              AtTabsPane current={this.state.current} index={key}>
                 <View className="topicListBox">
-                  {topicList.map((item, index) => {
-                    return <TabItem data={item} {...props}/>
+                  {topicList.map((item) => {
+                    return <TabItem data={item}/>
                   })}
                 </View>
               </AtTabsPane>

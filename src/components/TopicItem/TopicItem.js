@@ -25,18 +25,31 @@ export default class TopicList extends Component{
     componentDidShow() {}
     componentDidHide() {}
     componentDidMount() {}
-    enterTopicDetails() {
-
+    enterTopicDetails(data) {
+        Taro.navigateTo({
+            url: `/pages/articleDetails/articleDetails?id=${data.id}`
+        })
     }
-    enterUserInfo() {
-
-    }
+    getTab(top,good,tab) {
+        if (top) {
+          return '置顶';
+        } else if (good) {
+          return '精华';
+        } else {
+          const tabArray = {
+            'ask': '问答',
+            'share': '分享',
+            'job': '招聘'
+          };
+          return tabArray[tab];
+        }
+      }
     render() {
         const {data,getTab} = this.props;
         return (
-            <View className="topicItem" {...this.props.enterTopicDetails(data)}>
+            <View className="topicItem" onClick={() => this.enterTopicDetails(data)}>
                 <View className="topicTitle" >
-                    <Text className="item-info-tab">{getTab(data.top,data.good,data.tab)}</Text>
+                    <Text className="item-info-tab">{this.getTab(data.top,data.good,data.tab)}</Text>
                     <Text className="item-info-title">{data.title}</Text>
                 </View>
                 <View className="topicContent">
