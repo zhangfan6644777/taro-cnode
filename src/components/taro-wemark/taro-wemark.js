@@ -3,7 +3,7 @@ import {
   View
 }
   from '@tarojs/components'
-
+import './taro-wemark.less';
 if (process.env.TARO_ENV === 'weapp') {
   var WxParse = require('./wxParse/wxParse');
 }
