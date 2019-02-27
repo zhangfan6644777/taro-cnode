@@ -8,6 +8,7 @@ import Tabbar from '../../components/Tabbar/Tabbar'
 import TabItem from '../../components/TopicItem/TopicItem'
 import moment from 'moment'
 import Service from '../../services/articleDetails'
+import wemark from '../../components/taro-wemark/taro-wemark'
 import './articleDetails.less'
 const tabList = [
   { title: '全部', type: 'all'},
@@ -154,7 +155,9 @@ class Index extends Component {
               <View className="authorInfo-text"><Text>发布于{moment(detail.create_at).format('YYYY-MM-DD')}</Text><Text>{detail.visit_count}次浏览</Text></View>
             </View>
           </View>
-          <View className="markdown-body topic-content" dangerouslySetInnerHTML={{ __html: detail.content }} />
+          {process.env.TARO_ENV === 'weapp' ? <wemark desc={detail.content}/> : ''}
+          {process.env.TARO_ENV === 'h5' ? <View className="markdown-body topic-content" dangerouslySetInnerHTML={{ __html: detail.content }} /> : ''}
+          
           <section className="commentTitle">
             <h3>{detail.reply_count}回复</h3>
           </section>
