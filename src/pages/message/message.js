@@ -53,10 +53,13 @@ class Index extends Component {
   }
   async init() {
     console.log(this.props)
-    const params = {
-        accesstoken: this.props.center.loginInfo.accesstoken
-    }
+    const {loginInfo} = this.props.center;
+    if(loginInfo) {
+      const params = {
+        accesstoken: loginInfo.accesstoken
+      }
     this.props.getMessage(params);
+    }
   }
 
   async goLogin() {

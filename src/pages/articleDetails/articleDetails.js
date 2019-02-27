@@ -145,9 +145,9 @@ class Index extends Component {
         <AtMessage />
         {detail ?
         <View>
-          <section className="title">
-            <h3>{detail.title}</h3>
-          </section>
+          <View className="title">
+            <Text>{detail.title}</Text>
+          </View>
           <View className="authorInfo">
             <Image className="avatur" src={detail.author.avatar_url}/>
             <View className="authorInfo-text-box">
@@ -158,9 +158,9 @@ class Index extends Component {
           {process.env.TARO_ENV === 'weapp' ? <wemark desc={detail.content}/> : ''}
           {process.env.TARO_ENV === 'h5' ? <View className="markdown-body topic-content" dangerouslySetInnerHTML={{ __html: detail.content }} /> : ''}
           
-          <section className="commentTitle">
-            <h3>{detail.reply_count}回复</h3>
-          </section>
+          <View className="commentTitle">
+            <Text>{detail.reply_count}回复</Text>
+          </View>
           <View className="commentList">
           {detail.replies.map((item,key) => {
             return(<View className="commentItem">
