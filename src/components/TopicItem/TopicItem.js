@@ -34,13 +34,13 @@ export default class TopicList extends Component{
     render() {
         const {data,getTab} = this.props;
         return (
-            <View className="topicItem">
-                <View className="topicTitle" {...this.props.enterTopicDetails(data)}>
+            <View className="topicItem" {...this.props.enterTopicDetails(data)}>
+                <View className="topicTitle" >
                     <Text className="item-info-tab">{getTab(data.top,data.good,data.tab)}</Text>
                     <Text className="item-info-title">{data.title}</Text>
                 </View>
                 <View className="topicContent">
-                <Image className="avatar" {...this.props.enterUserInfo(data)} src={data.author.avatar_url}/>
+                <Image className="avatar"  src={data.author.avatar_url}/>
                 <View className="topicInfo">
                     <View className="topicInfo-box"><Text>{data.author.loginname}</Text><Text>{data.reply_count}/{data.visit_count}</Text></View>
                     <View className="topicInfo-box"><Text>replyAt {moment(data.last_reply_at).format('YYYY-MM-DD')}</Text><Text>creatAt {moment(data.last_reply_at).format('YYYY-MM-DD')}</Text></View>
