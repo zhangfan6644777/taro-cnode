@@ -133,9 +133,16 @@ class Index extends Component {
     
   }
   goLogin() {
-    Taro.navigateTo({
-      url: `/pages/center/center`
-    });
+
+    if(process.env.TARO_ENV === 'h5'){
+      Taro.navigateTo({
+        url: `/pages/center/center`
+      });
+    } else {
+      Taro.switchTab({
+        url: `/pages/center/center`
+      });
+    }
   }
   render () {
     const {detail} = this.props.articleDetails;
