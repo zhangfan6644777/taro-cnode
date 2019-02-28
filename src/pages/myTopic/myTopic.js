@@ -14,7 +14,7 @@ import moment from 'moment'
 class Index extends Component {
 
     config = {
-    navigationBarTitleText: '详情'
+    navigationBarTitleText: '我的话题'
   }
   constructor(props) {
     super(props);

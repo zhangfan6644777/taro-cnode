@@ -17,7 +17,7 @@ const tabList = [
 class Index extends Component {
 
     config = {
-    navigationBarTitleText: '详情'
+    navigationBarTitleText: '发布'
   }
   constructor(props) {
     super(props);

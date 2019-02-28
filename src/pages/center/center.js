@@ -29,7 +29,7 @@ const tabList = [
 class Index extends Component {
 
     config = {
-    navigationBarTitleText: '详情'
+    navigationBarTitleText: '我的'
   }
   constructor(props) {
     super(props);
