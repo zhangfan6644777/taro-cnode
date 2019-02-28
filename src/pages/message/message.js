@@ -108,6 +108,7 @@ class Index extends Component {
   render () {
     const {loginInfo} = this.props.center;
     const {message} = this.props;
+    const listArray = this.state.current === 0 ? message.has_read_messages : message.hasnot_read_messages
     return (
       <View className="messageContainer">
         {loginInfo ?
@@ -117,10 +118,11 @@ class Index extends Component {
         current={this.state.current}
         tabList={tabList} 
         onClick={this.handleClick.bind(this)}>
-        {tabList.map((items,index) => {
-            return <AtTabsPane current={this.state.current} index={index} >
-            {message[items.array].length !== 0 ? message[items.array].map((item) => {
-                return <AtListItem
+        <AtTabsPane current={this.state.current} index={0} >
+            {message.has_read_messages.length !== 0 ? message.has_read_messages.map((item,keys) => {
+                return <
+                AtListItem
+                key={keys}
                 note={decodeURI(`来自${item.topic.title}`)}
                 title={this.getcontent(item.reply.content)}
                 arrow='right'
@@ -130,28 +132,27 @@ class Index extends Component {
             />
             })
             :
-            <View style={{textAlign: 'center'}}>暂无数据</View>
+            <View className="nodata">暂无数据</View>
             }
-            
         </AtTabsPane>
-        })}
 
-            {/* <AtTabsPane current={this.state.current} index={1} >
-                {hasnot_read_messages.length !== 0 ? hasnot_read_messages.map((item) => {
-                    return <AtListItem
-                    note={decodeURI(`来自${item.topic.title}`)}
-                    title={this.getcontent(item.reply.content)}
-                    arrow='right'
-                    extraText={moment(item.last_reply_at).format("YYYY-MM-DD")}
-                    onClick={() => this.jump(item.id)}
-                    thumb={item.author.avatar_url}
-                />
-                })
-                :
-                <View style={{textAlign: 'center'}}>暂无数据</View>
-                }
-                
-            </AtTabsPane> */}
+        <AtTabsPane current={this.state.current} index={1} >
+            {message.hasnot_read_messages.length !== 0 ? message.hasnot_read_messages.map((item,keys) => {
+                return <
+                AtListItem
+                key={keys}
+                note={decodeURI(`来自${item.topic.title}`)}
+                title={this.getcontent(item.reply.content)}
+                arrow='right'
+                extraText={moment(item.last_reply_at).format("YYYY-MM-DD")}
+                onClick={() => this.jump(item.topic.id,item.id)}
+                thumb={item.author.avatar_url}
+            />
+            })
+            :
+            <View className="nodata">暂无数据</View>
+            }
+        </AtTabsPane>
         </AtTabs>
         :
         <View className="loginTip">请先<Text onClick={this.goLogin.bind(this)} className="login-text">登录</Text>在操作</View>
