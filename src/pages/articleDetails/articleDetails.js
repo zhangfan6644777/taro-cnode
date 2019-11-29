@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View,Text, Image } from '@tarojs/components'
+import { View,Text, Image,RichText  } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import {AtForm,AtTextarea,AtButton,AtMessage} from 'taro-ui'
@@ -7,7 +7,6 @@ import { getDetail, refreshDetail } from '../../actions/articleDetails'
 import moment from 'moment'
 import Service from '../../services/articleDetails'
 import './articleDetails.scss'
-import wemark from '../../components/taro-wemark/taro-wemark'
 
 const tabList = [
   { title: '全部', type: 'all'},
@@ -145,6 +144,7 @@ class Index extends Component {
   }
   render () {
     const {detail} = this.props.articleDetails;
+    detail.content = detail.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
     const {loginInfo} = this.props.center
     return (
       <View className='topicDetailContainer'>
@@ -161,7 +161,7 @@ class Index extends Component {
               <View className='authorInfo-text'><Text>发布于{moment(detail.create_at).format('YYYY-MM-DD')}</Text><Text>{detail.visit_count}次浏览</Text></View>
             </View>
           </View>
-          {process.env.TARO_ENV === 'weapp' ? <wemark desc={detail.content} /> : ''}
+          {process.env.TARO_ENV === 'weapp' ? <RichText nodes={detail.content} /> : ''}
           {process.env.TARO_ENV === 'h5' ? <View className='markdown-body topic-content' dangerouslySetInnerHTML={{ __html: detail.content }} /> : ''}
           
           <View className='commentTitle'>
