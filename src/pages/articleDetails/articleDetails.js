@@ -1,15 +1,14 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Text, Image } from '@tarojs/components'
+import { View,Text, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
-import { AtTabTexte, AtActivityIndicator,AtIcon,AtForm,AtTextarea,AtButton,AtMessage} from 'taro-ui'
+import {AtForm,AtTextarea,AtButton,AtMessage} from 'taro-ui'
 import { getDetail, refreshDetail } from '../../actions/articleDetails'
-import Tabbar from '../../components/Tabbar/Tabbar'
-import TabItem from '../../components/TopicItem/TopicItem'
 import moment from 'moment'
 import Service from '../../services/articleDetails'
-import './articleDetails.less'
+import './articleDetails.scss'
 import wemark from '../../components/taro-wemark/taro-wemark'
+
 const tabList = [
   { title: '全部', type: 'all'},
   { title: '精华', type: 'good'},
@@ -148,38 +147,38 @@ class Index extends Component {
     const {detail} = this.props.articleDetails;
     const {loginInfo} = this.props.center
     return (
-      <View className="topicDetailContainer">
+      <View className='topicDetailContainer'>
         <AtMessage />
         {detail ?
         <View>
-          <View className="title">
+          <View className='title'>
             <Text>{detail.title}</Text>
           </View>
-          <View className="authorInfo">
-            <Image className="avatur" src={detail.author.avatar_url}/>
-            <View className="authorInfo-text-box">
-              <View className="authorInfo-text authorInfo-text-first"><Text>{detail.author.loginname}</Text><Text className="authorInfo-text-second"><Text>{this.getTab(detail.top,detail.good,detail.tab)}</Text></Text></View>
-              <View className="authorInfo-text"><Text>发布于{moment(detail.create_at).format('YYYY-MM-DD')}</Text><Text>{detail.visit_count}次浏览</Text></View>
+          <View className='authorInfo'>
+            <Image className='avatur' src={detail.author.avatar_url} />
+            <View className='authorInfo-text-box'>
+              <View className='authorInfo-text authorInfo-text-first'><Text>{detail.author.loginname}</Text><Text className='authorInfo-text-second'><Text>{this.getTab(detail.top,detail.good,detail.tab)}</Text></Text></View>
+              <View className='authorInfo-text'><Text>发布于{moment(detail.create_at).format('YYYY-MM-DD')}</Text><Text>{detail.visit_count}次浏览</Text></View>
             </View>
           </View>
-          {process.env.TARO_ENV === 'weapp' ? <wemark desc={detail.content}/> : ''}
-          {process.env.TARO_ENV === 'h5' ? <View className="markdown-body topic-content" dangerouslySetInnerHTML={{ __html: detail.content }} /> : ''}
+          {process.env.TARO_ENV === 'weapp' ? <wemark desc={detail.content} /> : ''}
+          {process.env.TARO_ENV === 'h5' ? <View className='markdown-body topic-content' dangerouslySetInnerHTML={{ __html: detail.content }} /> : ''}
           
-          <View className="commentTitle">
+          <View className='commentTitle'>
             <Text>{detail.reply_count}回复</Text>
           </View>
-          <View className="commentList">
+          <View className='commentList'>
           {detail.replies.map((item,key) => {
-            return(<View className="commentItem">
-              <View className="commentInfo">
-                <Image className="replyerAvatur" src={item.author.avatar_url}/>
-                <View className="replyer-text-box"><Text className="replyer-text">{item.author.loginname}</Text><Text>{key+1}楼</Text></View>
+            return(<View className='commentItem'>
+              <View className='commentInfo'>
+                <Image className='replyerAvatur' src={item.author.avatar_url} />
+                <View className='replyer-text-box'><Text className='replyer-text'>{item.author.loginname}</Text><Text>{key+1}楼</Text></View>
               </View>
-              {process.env.TARO_ENV === 'weapp' ? <wemark desc={item.content}/> : ''}
-              {process.env.TARO_ENV === 'h5' ? <View className="markdown-body topic-content" dangerouslySetInnerHTML={{ __html: item.content }} /> : ''}
-              <View className="commentBottom">
-                <Text className="replyer-text-time">{moment(item.create_at).format('YYYY-MM-DD')}</Text>
-                <View className="good-box">
+              {process.env.TARO_ENV === 'weapp' ? <wemark desc={item.content} /> : ''}
+              {process.env.TARO_ENV === 'h5' ? <View className='markdown-body topic-content' dangerouslySetInnerHTML={{ __html: item.content }} /> : ''}
+              <View className='commentBottom'>
+                <Text className='replyer-text-time'>{moment(item.create_at).format('YYYY-MM-DD')}</Text>
+                <View className='good-box'>
                 {/* {this.state.login ?
                 <Text className="good-text">
                 <AtIcon value='heart' size='20' color='#707070'></AtIcon>
@@ -198,19 +197,19 @@ class Index extends Component {
           })}
           {loginInfo ?
             <AtForm
-              className="form"
+              className='form'
             >
               <AtTextarea
-                className="contentInput"
+                className='contentInput'
                 value={this.state.contentValue}
                 onChange={this.changeContent.bind(this)}
                 maxLength={200}
                 placeholder={decodeURI('请输入回复内容')}
               />
-              <AtButton type='primary' className="submitBtn" onClick={() => this.onSubmit()}>评论</AtButton>
+              <AtButton type='primary' className='submitBtn' onClick={() => this.onSubmit()}>评论</AtButton>
             </AtForm>
             :
-            <View className="loginTip">请先<Text onClick={this.goLogin.bind(this)} className="login-text">登录</Text>在操作</View>
+            <View className='loginTip'>请先<Text onClick={this.goLogin.bind(this)} className='login-text'>登录</Text>在操作</View>
             }
           </View>
         </View>

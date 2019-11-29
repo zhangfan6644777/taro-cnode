@@ -3,7 +3,8 @@ import {
   View
 }
   from '@tarojs/components'
-import './taro-wemark.less';
+import './taro-wemark.scss';
+
 if (process.env.TARO_ENV === 'weapp') {
   var WxParse = require('./wxParse/wxParse');
 }
@@ -83,8 +84,8 @@ export default class DescRichText extends Component {
     return (
       <View>
         {/*<RichText nodes={detail.item.extra}></RichText>*/}
-        <import src='./wxParse/wxParse.wxml'/>
-        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+        <import src='./wxParse/wxParse.wxml' />
+        <template is='wxParse' data='{{wxParseData:article.nodes}}' />
       </View>
     )
   }

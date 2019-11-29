@@ -6,7 +6,8 @@ import { AtTabs,AtTabsPane, AtInput, AtButton, AtMessage,AtListItem,AtList} from
 import { goLogin, getUserInfo, outLogin } from '../../actions/center'
 import Tabbar from '../../components/Tabbar/Tabbar'
 import moment from 'moment'
-import './center.less'
+import './center.scss'
+
 const tabList = [
   { title: '我的话题', type: 'topic'},
   { title: '我的回复', type: 'reply'}
@@ -114,32 +115,32 @@ class Index extends Component {
     const {loginInfo,userInfo} = this.props.center;
     
     return (
-      <View className="centerContainer">
+      <View className='centerContainer'>
         <AtMessage />
         {loginInfo ?
         <View>
             {userInfo && 
             <View>
-                <View className="mineUserInfo">
-                    <Image className="avatar" src={userInfo.avatar_url}/>
-                    <View className="center-github-box">https://github.com/{userInfo.githubUsername}</View>
-                    <View className="center-info-box">
+                <View className='mineUserInfo'>
+                    <Image className='avatar' src={userInfo.avatar_url} />
+                    <View className='center-github-box'>https://github.com/{userInfo.githubUsername}</View>
+                    <View className='center-info-box'>
                         <Text >创建于:{moment(userInfo.create_at).format('YYYY-MM-DD')}</Text>
-                        <Text className="center-info-text">积分:{userInfo.score}</Text>
+                        <Text className='center-info-text'>积分:{userInfo.score}</Text>
                     </View>
                 </View>
                 <AtList>
                     <AtListItem
-                        title={decodeURI('我发布的话题')}
-                        arrow='right'
-                        onClick={() => this.jump('creat')}
-                        thumb='https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png'
+                      title={decodeURI('我发布的话题')}
+                      arrow='right'
+                      onClick={() => this.jump('creat')}
+                      thumb='https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png'
                     />
                     <AtListItem
-                        title={decodeURI('我回复的话题')}
-                        arrow='right'
-                        onClick={() => this.jump('reply')}
-                        thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
+                      title={decodeURI('我回复的话题')}
+                      arrow='right'
+                      onClick={() => this.jump('reply')}
+                      thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
                     />
                     {/* <AtListItem
                         title={decodeURI('我收藏的话题')}
@@ -152,18 +153,18 @@ class Index extends Component {
             }
         </View>
         :
-        <View className="loginBox">
+        <View className='loginBox'>
             <AtInput
-                clear
-                placeholder='accesstoken'
-                value={this.state.accesstoken}
-                onChange={this.handleChange.bind(this)}
+              clear
+              placeholder='accesstoken'
+              value={this.state.accesstoken}
+              onChange={this.handleChange.bind(this)}
             />
             <AtButton loading={this.state.btnLoading} onClick={() => this.login()} type='primary'>登录</AtButton>
         </View>
 
         }
-        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={3}/>}
+        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={3} />}
         
       </View>
     )

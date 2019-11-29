@@ -7,7 +7,8 @@ import { getMessage, markAll } from '../../actions/message'
 import Tabbar from '../../components/Tabbar/Tabbar'
 import moment from 'moment'
 import Service from '../../services/message'
-import './message.less'
+import './message.scss'
+
 const tabList = [
     { title: '已读消息', array: 'has_read_messages'},
     { title: '未读消息', array: 'hasnot_read_messages'}
@@ -110,54 +111,53 @@ class Index extends Component {
     const {message} = this.props;
     const listArray = this.state.current === 0 ? message.has_read_messages : message.hasnot_read_messages
     return (
-      <View className="messageContainer">
+      <View className='messageContainer'>
         {loginInfo ?
         <AtTabs 
-        animated={false}
-        swipeable={false}
-        current={this.state.current}
-        tabList={tabList} 
-        onClick={this.handleClick.bind(this)}>
+          animated={false}
+          swipeable={false}
+          current={this.state.current}
+          tabList={tabList} 
+          onClick={this.handleClick.bind(this)}
+        >
         <AtTabsPane current={this.state.current} index={0} >
             {message.has_read_messages.length !== 0 ? message.has_read_messages.map((item,keys) => {
-                return <
-                AtListItem
-                key={keys}
-                note={decodeURI(`来自${item.topic.title}`)}
-                title={this.getcontent(item.reply.content)}
-                arrow='right'
-                extraText={moment(item.last_reply_at).format("YYYY-MM-DD")}
-                onClick={() => this.jump(item.topic.id,item.id)}
-                thumb={item.author.avatar_url}
-            />
+                return <AtListItem
+                  key={keys}
+                  note={decodeURI(`来自${item.topic.title}`)}
+                  title={this.getcontent(item.reply.content)}
+                  arrow='right'
+                  extraText={moment(item.last_reply_at).format("YYYY-MM-DD")}
+                  onClick={() => this.jump(item.topic.id,item.id)}
+                  thumb={item.author.avatar_url}
+                />
             })
             :
-            <View className="nodata">暂无数据</View>
+            <View className='nodata'>暂无数据</View>
             }
         </AtTabsPane>
 
         <AtTabsPane current={this.state.current} index={1} >
             {message.hasnot_read_messages.length !== 0 ? message.hasnot_read_messages.map((item,keys) => {
-                return <
-                AtListItem
-                key={keys}
-                note={decodeURI(`来自${item.topic.title}`)}
-                title={this.getcontent(item.reply.content)}
-                arrow='right'
-                extraText={moment(item.last_reply_at).format("YYYY-MM-DD")}
-                onClick={() => this.jump(item.topic.id,item.id)}
-                thumb={item.author.avatar_url}
-            />
+                return <AtListItem
+                  key={keys}
+                  note={decodeURI(`来自${item.topic.title}`)}
+                  title={this.getcontent(item.reply.content)}
+                  arrow='right'
+                  extraText={moment(item.last_reply_at).format("YYYY-MM-DD")}
+                  onClick={() => this.jump(item.topic.id,item.id)}
+                  thumb={item.author.avatar_url}
+                />
             })
             :
-            <View className="nodata">暂无数据</View>
+            <View className='nodata'>暂无数据</View>
             }
         </AtTabsPane>
         </AtTabs>
         :
-        <View className="loginTip">请先<Text onClick={this.goLogin.bind(this)} className="login-text">登录</Text>在操作</View>
+        <View className='loginTip'>请先<Text onClick={this.goLogin.bind(this)} className='login-text'>登录</Text>在操作</View>
         }
-        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={2}/>}
+        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={2} />}
       </View>
     )
   }

@@ -3,7 +3,6 @@ const INITIAL_STATE = {
 }
 
 export default function home (state = INITIAL_STATE, action) {
-  console.log('actionactionaction',action)
   switch (action.type) {
     case 'INITLIST':
     return {

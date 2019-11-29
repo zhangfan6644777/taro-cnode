@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
-import './index.less'
+import './index.scss'
 
 import { AtTabBar, AtTabs, AtTabsPane, AtLoadMore, AtActivityIndicator} from 'taro-ui'
 import { getTopicList, initlist, getMoreTopicList } from '../../actions/home'
@@ -111,27 +111,28 @@ class Index extends Component {
     }
   }
   render () {
+    
     const {topicList} = this.props.home;
     return (
-      <View className="homepage">
+      <View className='homepage'>
         <AtTabs
           animated={false}
           swipeable={false}
           current={this.state.current}
           tabList={tabList}
-          onClick={this.handleClick.bind(this)}>
+          onClick={this.handleClick.bind(this)}
+        >
           {tabList.map((item, key) => {
-            return <
-              AtTabsPane current={this.state.current} index={key}>
-                <View className="topicListBox">
-                  {topicList.map((item) => {
-                    return <TabItem data={item}/>
+            return <AtTabsPane current={this.state.current} index={key}>
+                <View className='topicListBox'>
+                  {topicList.map(items => {
+                    return <TabItem data={items} />
                   })}
                 </View>
               </AtTabsPane>
           })}
         </AtTabs>
-        {this.state.loading && <AtActivityIndicator size="50" color="#FF544F" mode='center' content='loading'></AtActivityIndicator>}
+        {this.state.loading && <AtActivityIndicator size='50' color='#FF544F' mode='center' content='loading'></AtActivityIndicator>}
 
         <View className={this.state.status === 'more' ? "loadmore" : 'loadmore-loading'}>
         {!this.state.loading && <AtLoadMore
@@ -139,7 +140,7 @@ class Index extends Component {
           status={this.state.status}
         />}
         </View>
-        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={0}/>}
+        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={0} />}
       </View>
     )
   }

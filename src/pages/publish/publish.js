@@ -3,8 +3,9 @@ import { View, Button, Text, Image, Picker } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtInput, AtButton, AtMessage,AtForm,AtTextarea} from 'taro-ui'
 import Tabbar from '../../components/Tabbar/Tabbar'
-import './publishContainer.less'
+import './publishContainer.scss'
 import Service from '../../services/publish';
+
 const tabList = [
   { title: '我的话题', type: 'topic'},
   { title: '我的回复', type: 'reply'}
@@ -119,16 +120,16 @@ class Index extends Component {
   render () {
     const {loginInfo} = this.props.center
     return (
-      <View className="publishContainer">
+      <View className='publishContainer'>
         <AtMessage />
         {loginInfo ?
         <AtForm
-          className="form"
+          className='form'
           onSubmit={this.onSubmit.bind(this)}
         >
           <View className='page-section'>
               <View>
-                <Picker mode='selector' range={this.state.selector} rangeKey="label" onChange={this.onChange}>
+                <Picker mode='selector' range={this.state.selector} rangeKey='label' onChange={this.onChange}>
                   <View className='picker'>
                     当前选择：{this.state.selectorChecked.label}
                   </View>
@@ -136,7 +137,7 @@ class Index extends Component {
               </View>
           </View>
           <AtInput
-            className="titleInput"
+            className='titleInput'
             name='value'
             title={decodeURI('标题')}
             type='text'
@@ -145,18 +146,18 @@ class Index extends Component {
             onChange={this.changeTitle.bind(this)}
           />
           <AtTextarea
-            className="contentInput"
+            className='contentInput'
             value={this.state.contentValue}
             onChange={this.changeContent.bind(this)}
             maxLength={200}
             placeholder={decodeURI('请输入内容')}
           />
-          <AtButton type='primary' className="submitBtn" onClick={() => this.onSubmit()}>提交</AtButton>
+          <AtButton type='primary' className='submitBtn' onClick={() => this.onSubmit()}>提交</AtButton>
         </AtForm>
         :
-        <View className="loginTip">请先<Text onClick={this.goLogin.bind(this)} className="login-text">登录</Text>在操作</View>
+        <View className='loginTip'>请先<Text onClick={this.goLogin.bind(this)} className='login-text'>登录</Text>在操作</View>
         }
-        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={1}/>}
+        {process.env.TARO_ENV === 'weapp' ? '' : <Tabbar current={1} />}
       </View>
     )
   }
